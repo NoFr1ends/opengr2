@@ -32,8 +32,6 @@ bool OG_DLLAPI Compression_UnOodle1(uint8_t* compressedData,
         return true;
     }
 
-    memset(compressedData + compressedLength, 0, (4 - compressedLength) % 4); // todo: buffer overflow?!
-
     TParameter parameters[3] = {};
     memcpy(parameters, compressedData, sizeof(parameters));
 
