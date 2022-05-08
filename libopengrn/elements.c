@@ -398,7 +398,7 @@ static bool Element_ParseNode(TElementInfo* elem, bool is64, TDArray* global)
 			//return Element_Parse(typeRoot, (uint8_t*)(ref->data) + (sizeof(void*) * i), is64, da, elem);
 		}
 
-	}
+	}*/
 	else if (elem->info.type == TYPEID_REFERENCETOVARIANTARRAY)
 	{
 		TReferenceToVariantArrayData* ref = (TReferenceToVariantArrayData*)elem->data;
@@ -408,10 +408,9 @@ static bool Element_ParseNode(TElementInfo* elem, bool is64, TDArray* global)
 
 		for (uint32_t i = 0; i < ref->size; i++)
 		{
-
-			//return Element_Parse(typeRoot, (uint8_t*)(ref->data) + (sizeof(void*) * i), is64, da, elem);
+			return Element_Parse(typeRoot, (uint8_t*)(ref->data) + (sizeof(void*) * i), is64, global, elem);
 		}
-	}*/
+	}
 	else if (elem->info.type == TYPEID_ARRAYOFREFERENCES)
 	{
 		TArrayReferenceData* ref = (TArrayReferenceData*)elem->data;
@@ -424,7 +423,9 @@ static bool Element_ParseNode(TElementInfo* elem, bool is64, TDArray* global)
 			if (!ref->ptr[i])
 				return true;
 
-			return Element_Parse(typeRoot, ref->ptr[i], is64, global, elem);
+			if(!Element_Parse(typeRoot, ref->ptr[i], is64, global, elem)) {
+                return false;
+            }
 		}
 	}
 
